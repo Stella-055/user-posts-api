@@ -39,7 +39,7 @@ app.get("/users",async(_req,res)=>{
  app.get("/users:id",async(req,res)=>{
         try {
            
-            console.log(id)
+           const {id}= req.params
             const user = await prisma.users.findFirst({
                 where: { id },
                 include: {
@@ -55,9 +55,9 @@ app.get("/users",async(_req,res)=>{
 app.post("/posts",async(req,res)=>{
     try {
         const {title,content,userId}= req.body
-        const user = await prisma.posts.create({data:{title,content,userId}})
+        const post = await prisma.posts.create({data:{title,content,userId}})
         res.status(200)
-            .json(user)
+            .json(post)
     } catch (error) {
         console.log(error)
     }
@@ -67,16 +67,30 @@ app.post("/posts",async(req,res)=>{
 app.get("/posts",async(_req,res)=>{
         try {
            
-            const user = await prisma.posts.findMany({include:{
+            const post = await prisma.posts.findMany({include:{
                 user:true
             }})
             res.status(200)
-                .json(user)
+                .json(post)
         } catch (error) {
             console.log(error)
         }
 })
 
+app.get("/posts:id",async(req,res)=>{
+    try {
+       const {id}=req.params
+        const post = await prisma.posts.findFirst({
+            where: { id },
+            include: {
+                user: true
+              } }
+        )
+        post? res.json(post):res.json({message:"something might have gone wrong"})
+    } catch (error) {
+        console.log(error)
+    }
+})  
 const port= process.env.PORT || 5000
 app.listen(port,()=>{
 
