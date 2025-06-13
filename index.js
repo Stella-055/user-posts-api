@@ -3,6 +3,36 @@ import { PrismaClient } from "@prisma/client";
 const app = express()
 app.use(express.json())
 const prisma = new PrismaClient
+
+app.get("/",(_req,res)=>{
+    res.send("<h1> Welcome user </h1>")
+})
+
+app.post("/users",async(req,res)=>{
+try {
+    const {firstName,lastName,emailAddress,username}= req.body
+    const user = await prisma.users.create({data:{firstName,lastName,emailAddress,username}})
+    res.status(200)
+        .json(user)
+} catch (error) {
+    console.log(error)
+}
+})
+
+app.get("/users",async(_req,res)=>{
+    try {
+        
+        const user = await prisma.users.findMany({
+            include: {
+                posts: true
+              } }
+        )
+        res.status(200)
+            .json(user)
+    } catch (error) {
+        console.log(error)
+    }
+    })
 const port= process.env.PORT || 5000
 app.listen(port,()=>{
 

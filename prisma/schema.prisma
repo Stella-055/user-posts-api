@@ -19,10 +19,9 @@ model Users {
   lastName     String 
   emailAddress String @unique
   username      String @unique
-  posts         Posts[]
+  posts         Posts[] 
 
-   
-}
+   }
 
 model Posts {
   id   String @id @default(uuid())
