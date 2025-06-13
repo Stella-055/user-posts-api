@@ -30,6 +30,6 @@ content String
 createdAt DateTime @default(now())
 lastUpdated DateTime   @updatedAt()
 isDeleted Boolean @default(false)
-userId String @unique
+userId String 
 user   Users @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

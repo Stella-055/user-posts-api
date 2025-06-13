@@ -19,6 +19,7 @@ try {
 }
 })
 
+
 app.get("/users",async(_req,res)=>{
     try {
         
@@ -49,7 +50,33 @@ app.get("/users",async(_req,res)=>{
         } catch (error) {
             console.log(error)
         }
-})    
+})  
+
+app.post("/posts",async(req,res)=>{
+    try {
+        const {title,content,userId}= req.body
+        const user = await prisma.posts.create({data:{title,content,userId}})
+        res.status(200)
+            .json(user)
+    } catch (error) {
+        console.log(error)
+    }
+    })
+
+
+app.get("/posts",async(_req,res)=>{
+        try {
+           
+            const user = await prisma.posts.findMany({include:{
+                user:true
+            }})
+            res.status(200)
+                .json(user)
+        } catch (error) {
+            console.log(error)
+        }
+})
+
 const port= process.env.PORT || 5000
 app.listen(port,()=>{
 
