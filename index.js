@@ -91,6 +91,36 @@ app.get("/posts:id",async(req,res)=>{
         console.log(error)
     }
 })  
+
+app.put("/posts:id",async (req,res) => {
+ try {
+    const {id}=req.params
+    const {title,content, isDeleted}=req.body
+    const updatedPost= await prisma.posts.findFirst({
+        where:{id},
+        data:{title,content,isDeleted}
+    })
+   updatedPost? res.json(updatedPost):res.json({message:"something must have gone wrong"})
+ } catch (error) {
+    console.log(error)
+ }
+ 
+})
+
+app.delete("/posts:id",async (req,res) => {
+    try {
+       const {id}=req.params
+      
+    const deletedPost= await prisma.posts.delete({
+           where:{id}
+           
+       })
+      deletedPost? res.json(deletedPost):res.json({message:"Unable to delete , something went wrong "})
+    } catch (error) {
+       console.log(error)
+    }
+    
+   })
 const port= process.env.PORT || 5000
 app.listen(port,()=>{
 
