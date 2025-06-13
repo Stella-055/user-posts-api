@@ -1,17 +1,1 @@
-{ "type": "module",
-  "name": "user-posts",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev" :" nodemon index.js",
-    "format": "prettier --write "
-  },
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "dotenv": "^16.5.0"
-  }
-}
+{"type":"module","name":"user-posts","version":"1.0.0","main":"index.js","scripts":{"test":"echo \"Error: no test specified\" && exit 1","start":"node index.js","dev":" nodemon index.js","format":"prettier --write "},"author":"","license":"ISC","description":"","dependencies":{"dotenv":"^16.5.0","prettier":"^3.5.3"}}
