@@ -33,6 +33,23 @@ app.get("/users",async(_req,res)=>{
         console.log(error)
     }
     })
+
+
+ app.get("/users:id",async(req,res)=>{
+        try {
+           
+            console.log(id)
+            const user = await prisma.users.findFirst({
+                where: { id },
+                include: {
+                    posts: true
+                  } }
+            )
+            user? res.json(user):res.json({message:"something might have gone wrong"})
+        } catch (error) {
+            console.log(error)
+        }
+})    
 const port= process.env.PORT || 5000
 app.listen(port,()=>{
 
